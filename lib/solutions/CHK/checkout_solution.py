@@ -25,6 +25,8 @@ def checkout(skus):
               'target_sku_reduction_quantity': 1}
     }
 
+    # Bring skus to upper case in case they have been mistyped?
+    skus = skus.upper()
 
     # Count items in basket and error if there are new items not present in LUTs
     basket = {}
@@ -73,5 +75,6 @@ def checkout(skus):
     return total_checkout_payment
 
 checkout('')
+
 
 
