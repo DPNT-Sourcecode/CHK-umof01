@@ -61,8 +61,9 @@ def checkout(skus):
                     total_packs = instrumental_count // offer_volume['quantity']    
                     payment += total_packs * offer_volume['total_price']
                     remainder = instrumental_count % offer_volume['quantity'] 
-                    instrumental_count = remainder
-            payment += remainder * prices_dict[sku]
+                    instrumental_count = remainder #readability
+                
+            payment += instrumental_count * prices_dict[sku]
             
         else: 
             payment = count * prices_dict[sku]
@@ -73,3 +74,5 @@ def checkout(skus):
     # Apply cross sales in case they exist: 
 
     return total_checkout_payment
+
+
