@@ -26,13 +26,13 @@ def checkout(skus):
     }
 
     # Bring skus to upper case in case they have been mistyped?
-    skus = skus.upper()
+    #skus = skus.upper()
 
     # Count items in basket and error if there are new items not present in LUTs
     basket = {}
     for sku in skus:
         if not sku in prices_dict:
-            print(-1) 
+            return -1
         basket[sku] = basket.get(sku, 0) + 1
 
     # The logic implies that getting one free in cross sales is always the best for the consumer
@@ -73,8 +73,3 @@ def checkout(skus):
     # Apply cross sales in case they exist: 
 
     return total_checkout_payment
-
-checkout('')
-
-
-
