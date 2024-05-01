@@ -49,7 +49,7 @@ def checkout(skus):
     # the offers first, sum the remainders. 
     # Otherwise just add the standard item * price
     final_checkout_basket = {}
-    total_checkout = 0
+    total_checkout_payment = 0
     for sku, count in basket.items():
         payment = 0
         if sku in special_offers_dict:
@@ -66,11 +66,12 @@ def checkout(skus):
             payment = count * prices_dict[sku]
         
         final_checkout_basket[sku] = {'items': count, 'payment': payment}
-        total_checkout += payment
+        total_checkout_payment += payment
             
     # Apply cross sales in case they exist: 
 
-    return total_checkout
+    return total_checkout_payment
 
+checkout('')
 
 
