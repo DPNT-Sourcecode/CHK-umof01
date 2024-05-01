@@ -9,7 +9,8 @@ def checkout(skus):
         'B': 30,
         'C': 20,
         'D': 15,
-        'E': 40
+        'E': 40,
+        'F': 10
     }
     # Special offers are now ordered from best to worst
     # NOTE: The algorithm relies on each list of offers being ordered from highest
@@ -19,9 +20,14 @@ def checkout(skus):
               {'quantity': 3, 'total_price': 130}],
         'B': [{'quantity': 2, 'total_price': 45}],
     }
-    cross_sale_offers_dict = {
+    # Dictionary of get n free after purchasing m products, can reference other
+    # products
+    get_free_products_offers_dict = {
         'E': {'quantity': 2, 
               'target_sku_sale': 'B', 
+              'target_sku_reduction_quantity': 1},
+        'F': {'quantity': 3, 
+              'target_sku_sale': 'F', 
               'target_sku_reduction_quantity': 1}
     }
 
@@ -37,12 +43,12 @@ def checkout(skus):
 
     # The logic implies that getting one free in cross sales is always the best for the consumer
     # So you can do that first:
-    for sku, values in cross_sale_offers_dict.items():
+    for sku, values in get_free_products_offers_dict.items():
         # Calculate how many you need to remove from basket
         # (with a minimum of zero)
         if sku in basket:
             if values['target_sku_sale'] in basket:
-                remove_from_basket = (basket[sku]  // values['quantity']) \
+                remove_from_basket = (basket[sku] // values['quantity']) \
                     * values['target_sku_reduction_quantity']
                 basket[values['target_sku_sale']] = max(basket[values['target_sku_sale']] - remove_from_basket, 
                                                         0)
@@ -74,5 +80,6 @@ def checkout(skus):
     # Apply cross sales in case they exist: 
 
     return total_checkout_payment
+
 
 
