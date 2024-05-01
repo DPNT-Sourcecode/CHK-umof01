@@ -39,10 +39,11 @@ def checkout(skus):
         # Calculate how many you need to remove from basket
         # (with a minimum of zero)
         if sku in basket:
-            remove_from_basket = (basket[sku]  // values['quantity']) \
-                * values['target_sku_reduction_quantity']
-            basket[values['target_sku_sale']] = max(basket[values['target_sku_sale']] - remove_from_basket, 
-                                                    0)
+            if values['target_sku_sale'] in basket:
+                remove_from_basket = (basket[sku]  // values['quantity']) \
+                    * values['target_sku_reduction_quantity']
+                basket[values['target_sku_sale']] = max(basket[values['target_sku_sale']] - remove_from_basket, 
+                                                        0)
 
     # Check if any of the items in the basket has a special offer and compute
     # the offers first, sum the remainders. 
@@ -70,4 +71,6 @@ def checkout(skus):
     # Apply cross sales in case they exist: 
 
     return total_checkout
+
+
 
