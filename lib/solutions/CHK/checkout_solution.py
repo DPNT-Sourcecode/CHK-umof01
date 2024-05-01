@@ -38,4 +38,3 @@ def checkout(skus):
             
     return final_checkout
 
-
