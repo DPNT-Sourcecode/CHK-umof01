@@ -3,6 +3,7 @@
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus):
+    
     # Define prices dictionary (could be defined in a different module for modularity)
     prices_dict = {
         'A': 50,
@@ -10,7 +11,28 @@ def checkout(skus):
         'C': 20,
         'D': 15,
         'E': 40,
-        'F': 10
+        'F': 10,
+        'G': 20,
+        'H': 10,
+        'I': 35,
+        'J': 60,
+        'K': 80,
+        'L': 90,
+        'M': 15,
+        'N': 40,
+        'O': 10,
+        'P': 50,
+        'Q': 30,
+        'R': 50,
+        'S': 30,
+        'T': 20,
+        'U': 40,
+        'V': 50, 
+        'W': 20,
+        'X': 90, 
+        'Y': 10,
+        'Z': 50
+
     }
     # Special offers are now ordered from best to worst
     # NOTE: The algorithm relies on each list of offers being ordered from highest
@@ -19,6 +41,13 @@ def checkout(skus):
         'A': [{'quantity': 5, 'total_price': 200},
               {'quantity': 3, 'total_price': 130}],
         'B': [{'quantity': 2, 'total_price': 45}],
+        'H': [{'quantity': 10, 'total_price': 80},
+              {'quantity': 5, 'total_price': 45}],
+        'K': [{'quantity': 2, 'total_price': 150}],
+        'P': [{'quantity': 5, 'total_price': 200}],
+        'Q': [{'quantity': 3, 'total_price': 80}],
+        'V': [{'quantity': 3, 'total_price': 130},
+              {'quantity': 2, 'total_price': 90}]
     }
     # Dictionary of get n free after purchasing m products, can reference other
     # products
@@ -28,6 +57,15 @@ def checkout(skus):
               'target_sku_reduction_quantity': 1},
         'F': {'quantity': 3, 
               'target_sku_sale': 'F', 
+              'target_sku_reduction_quantity': 1},
+        'N': {'quantity': 3, 
+              'target_sku_sale': 'M', 
+              'target_sku_reduction_quantity': 1},
+        'R': {'quantity': 3, 
+              'target_sku_sale': 'Q', 
+              'target_sku_reduction_quantity': 1},
+        'U': {'quantity': 4, 
+              'target_sku_sale': 'U', 
               'target_sku_reduction_quantity': 1}
     }
 
