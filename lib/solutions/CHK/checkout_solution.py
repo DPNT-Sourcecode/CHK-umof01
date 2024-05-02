@@ -81,9 +81,8 @@ def checkout(skus):
                                 key = lambda x: x['total_price'], 
                                 reverse = True)
 
-
-    # Reorder them from most expensive to least expensive based
-    # on the original prices:
+    # Reorder bundle offer SKUs from most expensive to least expensive based
+    # on the original prices to substract the most expensive first:
     for bundle in bundle_offers_dict:
         bundle['items'] = sorted(bundle['items'], 
                                  key = lambda x: prices_dict[x],
@@ -126,17 +125,21 @@ def checkout(skus):
         # Compute total number of bundles and delete items in order of price
         # (note that items have been ordered by their individual price to maximize
         # consumer savings)
+        # Also compute the bundle payment
         n_bundles = bundle_counter['total'] // bundle['quantity']
-        individual_items_to_delete = n_bundles * bundle['quantity']
+        n_to_delete = n_bundles * bundle['quantity']
+        total_checkout_payment += n_bundles * bundle['total_price']
 
         # Update SKUs from bundle items in the main basket to compute remaining
         # individual prices in the following loop
         for sku in bundle['items']:
             if sku in basket: 
-                bundle_counter[sku] = max(bundle_counter[sku] - individual_items_to_delete, 
-                                          0)
-                basket[sku] = bundle_counter[sku] # Update original basket
-        total_checkout_payment += n_bundles * bundle['total_price']
+                if n_to_delete > 0:
+                    n_sku_original = bundle_counter[sku]
+                    bundle_counter[sku] = max(bundle_counter[sku] - n_to_delete, 
+                                              0)
+                    basket[sku] = bundle_counter[sku] # Update original basket
+                    n_to_delete -= n_sku_original - bundle_counter[sku] # Reset counter
 
     for sku, count in basket.items():
         payment = 0
@@ -160,3 +163,4 @@ def checkout(skus):
     # Apply cross sales in case they exist: 
 
     return total_checkout_payment
+
