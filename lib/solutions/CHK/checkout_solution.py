@@ -118,4 +118,3 @@ def checkout(skus):
     # Apply cross sales in case they exist: 
 
     return total_checkout_payment
-
