@@ -117,7 +117,7 @@ def checkout(skus):
     # Create additional logic for bundle offers:
     for bundle in bundle_offers_dict:
         bundle_counter = {'total': 0}
-        # Count them into a total
+        # Count each item into a total
         for sku in bundle['items']:
             if sku in basket:
                 bundle_counter[sku] = basket[sku]
@@ -128,26 +128,15 @@ def checkout(skus):
         # consumer savings)
         n_bundles = bundle_counter['total'] // bundle['quantity']
         individual_items_to_delete = n_bundles * bundle['quantity']
+
+        # Update SKUs from bundle items in the main basket to compute remaining
+        # individual prices in the following loop
         for sku in bundle['items']:
             if sku in basket: 
                 bundle_counter[sku] = max(bundle_counter[sku] - individual_items_to_delete, 
                                           0)
                 basket[sku] = bundle_counter[sku] # Update original basket
         total_checkout_payment += n_bundles * bundle['total_price']
-        bundle_counter['total'] = bundle_counter['total'] % bundle['quantity']
-
-        
-    # Update SKUs from bundle items in the main basket to compute remaining
-    # individual prices
-
-        
-
-
-
-
-
-
-
 
     for sku, count in basket.items():
         payment = 0
@@ -171,4 +160,5 @@ def checkout(skus):
     # Apply cross sales in case they exist: 
 
     return total_checkout_payment
+
 
